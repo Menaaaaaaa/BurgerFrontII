@@ -26,8 +26,8 @@ function agregarProducto(producto){
     `   <td>  ${con}  </td> 
         <td>  <img src="${producto.imagen}" width="70px">  </td>
         <td>  ${producto.nombre}  </td>
-        <td>  ${producto.precio}  </td>
-        <td>  <span onclick="borrarProducto(con)" class="btn"> ❌ </span> </td>
+        <td>  $ ${producto.precio}  </td>
+        <td>  <span onclick="borrarProducto(${con})" class="btn"> ❌ </span> </td>
     `;
     listadoCarrito.appendChild(fila); 
 }
@@ -39,7 +39,8 @@ function infoProducto(pos){
         //id: con,
         nombre: producto.querySelector("h3").textContent,
         imagen: producto.querySelector("img").src,
-        precio: producto.querySelector("h5").textContent,
+        precio: producto.querySelector("h5").textContent.split("$")[1],
+        cantidad: 1
     }
     //console.log(infoPro );
     agregarProducto(infoPro);
@@ -92,3 +93,7 @@ function cargarPorLocalStorage(){
     todosProductos.forEach((producto)=>
     {agregarProducto(producto);})
 }
+
+contadorCarrito.parentElement .addEventListener("click" , ()=> {
+    listadoCarrito.parentElement.classList.toggle("ocultar");
+})
