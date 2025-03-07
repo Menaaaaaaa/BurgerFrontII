@@ -56,10 +56,22 @@ function borrarProducto(pos) {
     if(con>0){
         con--;
         contadorCarrito.textContent = con;
-        
+        updateProductNumbers();
     }
     eliminarProLocalStorage(pos)
-} 
+}
+
+function updateProductNumbers() {
+    const rows = document.querySelectorAll(".list-cart tbody tr");
+    rows.forEach((row, index) => {
+        const numberCell = row.querySelector("td:first-child");
+        numberCell.textContent = index + 1; // Actualiza el número
+        row.setAttribute("data-id", index + 1); // Actualiza el identificador único
+    });
+
+    // Actualiza el contador global
+    counter = rows.length;
+}
 
 //guardar productos en localStorage
 function guardarProLocalStorage(productos) {
