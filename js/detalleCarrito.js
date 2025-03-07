@@ -22,7 +22,7 @@ function cargarProductos(){
     let fila = document.createElement("tr");
     fila.innerHTML = 
     `   <td class="d-flex justify-content-evenly align-items-center">  
-            <span onclick="borrarProducto()" class="btn"> ❌ </span>
+            <span onclick="borrarProducto(${i})" class="btn"> ❌ </span>
             <img src="${producto.imagen}" width="70px">  
             ${producto.nombre}  
         </td>
@@ -36,7 +36,7 @@ function cargarProductos(){
                 <div class="increment" onclick ="actualizarCantidad(${i},1)"><i class="fa-solid fa-plus"=></i></div>
             </div>
          </td>
-          <td> ${producto.precio}</td>
+          <td> $${(producto.precio* producto.cantidad).toFixed(3)}</td>
     `;
         tablaCarrito.appendChild(fila);       
     })
@@ -60,8 +60,24 @@ function actualizarCantidad(pos, cambio){
         if(todosProductos[pos].cantidad <1){
             todosProductos[pos].cantidad =1;
         }
+    //calcular subtotal
+    // let subtotal = todosProductos[pos].precio * todosProductos[pos].cantidad
 }
 //actualizar local storage 
     localStorage.setItem("pro-carrito", JSON.stringify(todosProductos))
+    cargarProductos();
+}
+
+//funcion para borrar pro
+function borrarProducto(pos){
+    let todosProductos = [];
+    let productosPrevios = JSON.parse( localStorage.getItem("pro-carrito"))
+    if (productosPrevios != null){
+        todosProductos = Object.values(productosPrevios);
+    } 
+    //eliminar producto
+    todosProductos.splice(pos, 1)
+    localStorage.setItem("pro-carrito", JSON.stringify(todosProductos));
+    //recargar tabla
     cargarProductos();
 }
