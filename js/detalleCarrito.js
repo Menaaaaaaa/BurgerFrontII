@@ -131,7 +131,7 @@ btnResumen.addEventListener("click", ()=>{
     let Productos=JSON.parse(localStorage.getItem("pro-carrito") || []);
     let resumen = {
         //copia de todos los productos
-        "productos" : Productos,
+        ...Productos
     }
     //llenar la variable resumen con la info de la compra
     resumen.subtotal = resumenSubTotal.textContent;

@@ -15,9 +15,9 @@
       document.querySelector(".valor-domi").textContent = resumen.domicilio;
       document.querySelector(".total").textContent = resumen.totalApagar;
   
-      let todosProductos = document.querySelector(".productos");
-      todosProductos.innerHTML = "";
-      resumen.productos.forEach(producto => {
+      let productos = Object.values(resumen).filter(value => typeof value === "object" && value !== null && !Array.isArray(value));
+      //todosProductos.innerHTML = "";
+      productos.forEach(producto => {
         let Producto = document.createElement("div");
         Producto.classList.add("d-flex", "justify-content-between", "align-items-center", "mb-24");
         Producto.innerHTML = `
@@ -34,7 +34,7 @@
       Metodo.addEventListener("change", () => {  
         let pago=0;
         switch (Metodo.value) {
-          case "Contraentrga": // Contraentrega +(5%)
+          case "Contraentrega": // Contraentrega +(5%)
             pago += resumen.totalApagar * 0.05;
             alert("Recuerde que se agregará un 5% a la cuenta total");
             break;
